@@ -38,7 +38,7 @@ def test_four_resource_categories_present():
     assert expected == actual, f"Missing categories: {expected - actual}"
 
 # ─────────────────────────────────────────
-# TEST 4 — All 4 teams present
+# TEST 4 — All 4 teams present (FIXED)
 # ─────────────────────────────────────────
 def test_four_teams_present():
     df = pd.read_csv("data/azure_billing_raw.csv")
@@ -47,6 +47,7 @@ def test_four_teams_present():
     teams = set(tagged['team_tag'].str.replace('team:', '').unique())
     expected = {"DevOps", "DataEngineering", "Platform", "Product"}
     assert expected == teams, f"Missing teams: {expected - teams}"
+
 # ─────────────────────────────────────────
 # TEST 5 — Date range is 90 days
 # ─────────────────────────────────────────
@@ -57,15 +58,16 @@ def test_date_range_is_90_days():
     assert day_range == 89, f"Expected 89 day range, got {day_range}"
 
 # ─────────────────────────────────────────
-# TEST 6 — Some rows are untagged (testing fallback later)
+# TEST 6 — Some rows are untagged (FIXED)
 # ─────────────────────────────────────────
 def test_some_rows_are_untagged():
     df = pd.read_csv("data/azure_billing_raw.csv")
     # Untagged = empty string OR NaN
     untagged = df[df['team_tag'].isna() | (df['team_tag'] == '')]
     assert len(untagged) > 0, "Expected some untagged rows for fallback testing"
+
 # ─────────────────────────────────────────
-# TEST 7 — DuckDB loads correctly
+# TEST 7 — DuckDB loads correctly (FIXED)
 # ─────────────────────────────────────────
 def test_duckdb_loads_correctly():
     # Open in read-only mode to avoid lock conflicts
@@ -73,6 +75,7 @@ def test_duckdb_loads_correctly():
     count = conn.execute("SELECT COUNT(*) FROM raw_costs").fetchone()[0]
     conn.close()
     assert count > 0, "DuckDB raw_costs table is empty"
+
 # ─────────────────────────────────────────
 # TEST 8 — Connector returns a DataFrame
 # ─────────────────────────────────────────
@@ -107,6 +110,6 @@ def test_anomaly_spike_exists():
         (df['team_tag'] == 'team:DevOps') &
         (df['meter_category'] == 'Compute')
     ]['cost_inr'].mean()
-    
+
     assert spike_rows['cost_inr'].values[0] > avg_compute_cost * 2, \
         "Expected a cost spike on day 60 for DevOps Compute"
