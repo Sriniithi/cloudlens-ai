@@ -1,4 +1,5 @@
-name: CloudLens AI — CI Pipeline
+cat > .github/workflows/ci.yml << 'EOF'
+name: CloudLens AI CI Pipeline
 
 on:
   push:
@@ -9,29 +10,23 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Set up Python 3.11
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
-
-    - name: Install dependencies
-      run: pip install -r requirements.txt
-
-    - name: Generate synthetic data
-      run: python ingestion/generate_data.py
-
-    - name: Load into DuckDB
-      run: python ingestion/load_to_duckdb.py
-
-    - name: Run all tests
-      run: pytest tests/ -v --tb=short
-
-    - name: Check test coverage
-      run: |
-        pip install pytest-cov
-        pytest tests/ --cov=ingestion --cov-report=term-missing
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Generate synthetic data
+        run: python ingestion/generate_data.py
+      - name: Load into DuckDB
+        run: python ingestion/load_to_duckdb.py
+      - name: Run all tests
+        run: pytest tests/ -v --tb=short
+      - name: Check test coverage
+        run: |
+          pip install pytest-cov
+          pytest tests/ --cov=ingestion --cov-report=term-missing
+EOF
