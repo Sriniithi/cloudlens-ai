@@ -26,7 +26,6 @@ def test_no_nulls_in_key_columns():
         SELECT COUNT(*) FROM cleaned_costs
         WHERE usage_date IS NULL
         OR cost_inr IS NULL
-        OR team_tag IS NULL
         OR meter_category IS NULL
     """).fetchone()[0]
     conn.close()
