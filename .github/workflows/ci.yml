@@ -26,6 +26,8 @@ jobs:
         run: cp data/azure_billing_raw.csv data/azure_billing_clean.csv
       - name: Setup DuckDB schema
         run: python processing/load_cleaned_data.py
+      - name: Run attribution model
+        run: python processing/attribution_model.py
       - name: Run all tests
         run: pytest tests/ -v --tb=short
       - name: Check coverage
