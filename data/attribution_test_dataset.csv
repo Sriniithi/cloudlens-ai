@@ -1,0 +1,11 @@
+resource_type,resource_group,team_tag,meter_category,expected_team,expected_category,expected_confidence
+Microsoft.Compute/virtualMachines,rg-devops-prod,team:DevOps,Compute,DevOps,Compute,high
+Microsoft.Storage/storageAccounts,rg-platform-prod,team:Platform,Storage,Platform,Storage,high
+Microsoft.Sql/servers/databases,rg-dataengineering-prod,team:DataEngineering,Data Services,DataEngineering,Data Services,high
+Microsoft.Network/loadBalancers,rg-product-prod,team:Product,Networking,Product,Networking,high
+Microsoft.Compute/virtualMachines,rg-devops-prod,,Compute,DevOps,Compute,medium
+Microsoft.Storage/storageAccounts,rg-platform-prod,,Storage,Platform,Storage,medium
+Microsoft.Sql/servers/databases,rg-dataengineering-prod,,Data Services,DataEngineering,Data Services,medium
+Microsoft.Network/virtualNetworks,rg-product-prod,,Networking,Product,Networking,medium
+Microsoft.Compute/virtualMachines,rg-unknown-prod,,Compute,Untagged,Compute,low
+Microsoft.Storage/storageAccounts,rg-unknown-test,,Storage,Untagged,Storage,low
